@@ -1,28 +1,34 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+
+const storageCache = new Map()
 
 export function useLocalStorage(key, initialValue) {
-  const [value, setValue] = useState(initialValue)
-  const [isInitialized, setIsInitialized] = useState(false)
-
-  useEffect(() => {
+  const [value, setValue] = useState(() => {
+    if (storageCache.has(key)) {
+      return storageCache.get(key)
+    }
     try {
       const stored = localStorage.getItem(key)
       if (stored) {
-        setValue(JSON.parse(stored))
-      } else {
-        setValue(initialValue)
+        const parsed = JSON.parse(stored)
+        storageCache.set(key, parsed)
+        return parsed
       }
-    } catch (e) {
-      setValue(initialValue)
-    }
-    setIsInitialized(true)
-  }, [key, initialValue])
+    } catch (e) {}
+    storageCache.set(key, initialValue)
+    return initialValue
+  })
+
+  const isFirstRender = useRef(true)
 
   useEffect(() => {
-    if (isInitialized) {
-      localStorage.setItem(key, JSON.stringify(value))
+    if (isFirstRender.current) {
+      isFirstRender.current = false
+      return
     }
-  }, [key, value, isInitialized])
+    storageCache.set(key, value)
+    localStorage.setItem(key, JSON.stringify(value))
+  }, [key, value])
 
   return [value, setValue]
 }
