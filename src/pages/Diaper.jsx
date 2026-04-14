@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useLocalStorage, useBaby, hasBabyInfo } from '../hooks/useLocalStorage'
+import { useNavigate } from 'react-router-dom'
+import { useApp, hasBabyInfo } from '../context/AppContext'
 import { DiaperRecord } from '../data/types'
 
 const moduleColor = {
@@ -11,8 +12,8 @@ const moduleColor = {
 
 export default function Diaper() {
   const navigate = useNavigate()
-  const [baby] = useBaby()
-  const [diaper, setDiaper] = useLocalStorage('diaper', [])
+  const navigate = useNavigate()
+  const { baby, diaper, setDiaper } = useApp()
   const [showForm, setShowForm] = useState(false)
   const [expandedId, setExpandedId] = useState(null)
   const [form, setForm] = useState({ ...DiaperRecord, time: new Date().toISOString().slice(0, 16) })

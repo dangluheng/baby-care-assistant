@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useLocalStorage, useBaby, hasBabyInfo } from '../hooks/useLocalStorage'
+import { useNavigate } from 'react-router-dom'
+import { useApp, hasBabyInfo } from '../context/AppContext'
 import { HealthRecord } from '../data/types'
 
 const typeConfig = {
@@ -16,8 +17,8 @@ const moduleColor = {
 
 export default function Health() {
   const navigate = useNavigate()
-  const [baby] = useBaby()
-  const [health, setHealth] = useLocalStorage('health', [])
+  const navigate = useNavigate()
+  const { baby, health, setHealth } = useApp()
   const [showForm, setShowForm] = useState(false)
   const [expandedId, setExpandedId] = useState(null)
   const [form, setForm] = useState({ ...HealthRecord, date: new Date().toISOString().slice(0, 10) })

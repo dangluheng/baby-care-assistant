@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useLocalStorage, useBaby, hasBabyInfo } from '../hooks/useLocalStorage'
+import { useNavigate } from 'react-router-dom'
+import { useApp, hasBabyInfo } from '../context/AppContext'
 import { GrowthRecord } from '../data/types'
 
 const moduleColor = {
@@ -11,8 +12,8 @@ const moduleColor = {
 
 export default function Growth() {
   const navigate = useNavigate()
-  const [baby] = useBaby()
-  const [growth, setGrowth] = useLocalStorage('growth', [])
+  const navigate = useNavigate()
+  const { baby, growth, setGrowth } = useApp()
   const [showForm, setShowForm] = useState(false)
   const [expandedId, setExpandedId] = useState(null)
   const [form, setForm] = useState({ ...GrowthRecord, date: new Date().toISOString().split('T')[0] })

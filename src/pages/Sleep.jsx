@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useLocalStorage, useBaby, hasBabyInfo } from '../hooks/useLocalStorage'
+import { useApp, hasBabyInfo } from '../context/AppContext'
 import { SleepRecord } from '../data/types'
 
 const moduleColor = {
@@ -13,7 +13,7 @@ const moduleColor = {
 export default function Sleep() {
   const navigate = useNavigate()
   const [baby] = useBaby()
-  const [sleep, setSleep] = useLocalStorage('sleep', [])
+  const { baby, sleep, setSleep } = useApp()
   const [showForm, setShowForm] = useState(false)
   const [expandedId, setExpandedId] = useState(null)
   const [form, setForm] = useState({ ...SleepRecord, startTime: new Date().toISOString().slice(0, 16) })

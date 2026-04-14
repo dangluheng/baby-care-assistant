@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useLocalStorage } from '../hooks/useLocalStorage'
+import { useApp } from '../context/AppContext'
 
-export default function Settings({ baby, setBaby }) {
+export default function Settings() {
   const navigate = useNavigate()
+  const { baby, setBaby, feeding } = useApp()
   const [editing, setEditing] = useState(!baby.name)
   const [form, setForm] = useState(baby)
-  const [feeding] = useLocalStorage('feeding', [])
 
   const handleSave = () => {
     setBaby({ ...form, id: form.id || Date.now().toString() })

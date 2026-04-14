@@ -1,14 +1,11 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useLocalStorage, useBaby, hasBabyInfo } from '../hooks/useLocalStorage'
+import { useApp } from '../context/AppContext'
 import BabyInfoCard from '../components/BabyInfoCard'
 
 export default function Home() {
   const navigate = useNavigate()
-  const [baby] = useBaby()
-  const [feeding] = useLocalStorage('feeding', [])
-  const [diaper] = useLocalStorage('diaper', [])
-  const [supplement] = useLocalStorage('supplement', [])
+  const { baby, feeding, diaper, supplement } = useApp()
 
   const today = new Date().toISOString().split('T')[0]
 

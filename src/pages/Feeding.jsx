@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useLocalStorage, useBaby, hasBabyInfo } from '../hooks/useLocalStorage'
+import { useApp, hasBabyInfo } from '../context/AppContext'
 import { FeedingRecord } from '../data/types'
 
 const typeConfig = {
@@ -17,8 +17,7 @@ const moduleColor = {
 
 export default function Feeding() {
   const navigate = useNavigate()
-  const [baby] = useBaby()
-  const [feeding, setFeeding] = useLocalStorage('feeding', [])
+  const { baby, feeding, setFeeding } = useApp()
   const [showForm, setShowForm] = useState(false)
   const [expandedId, setExpandedId] = useState(null)
   const [form, setForm] = useState({ ...FeedingRecord, startTime: new Date().toISOString().slice(0, 16) })

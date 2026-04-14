@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useLocalStorage, useBaby, hasBabyInfo } from '../hooks/useLocalStorage'
+import { useNavigate } from 'react-router-dom'
+import { useApp, hasBabyInfo } from '../context/AppContext'
 import { SupplementRecord } from '../data/types'
 
 const typeConfig = {
@@ -18,8 +19,8 @@ const moduleColor = {
 
 export default function Supplement() {
   const navigate = useNavigate()
-  const [baby] = useBaby()
-  const [supplement, setSupplement] = useLocalStorage('supplement', [])
+  const navigate = useNavigate()
+  const { baby, supplement, setSupplement } = useApp()
   const [showForm, setShowForm] = useState(false)
   const [expandedId, setExpandedId] = useState(null)
   const [form, setForm] = useState({ ...SupplementRecord, date: new Date().toISOString().slice(0, 10) })
