@@ -1,0 +1,14 @@
+node_modules/
+dist/
+dist.zip
+node-global/
+npm-extract/
+node.msi
+msi-log.txt
+npm.tar
+npm.tgz
+npm.bat
+versions.txt
+start.bat
+push.bat
+*.log
