@@ -12,7 +12,6 @@ const moduleColor = {
 
 export default function Sleep() {
   const navigate = useNavigate()
-  const [baby] = useBaby()
   const { baby, sleep, setSleep } = useApp()
   const [showForm, setShowForm] = useState(false)
   const [expandedId, setExpandedId] = useState(null)
