@@ -32,3 +32,11 @@ export function useLocalStorage(key, initialValue) {
 
   return [value, setValue]
 }
+
+export function useBaby() {
+  return useLocalStorage('baby', { id: '', name: '', birthDate: '', gender: 'male' })
+}
+
+export function hasBabyInfo(baby) {
+  return baby && baby.name && baby.name.trim() !== ''
+}

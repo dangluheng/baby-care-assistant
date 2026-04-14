@@ -1,30 +1,31 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useLocalStorage } from '../hooks/useLocalStorage'
+import { useLocalStorage, useBaby, hasBabyInfo } from '../hooks/useLocalStorage'
 import BabyInfoCard from '../components/BabyInfoCard'
 
-export default function Home({ baby }) {
+export default function Home() {
   const navigate = useNavigate()
+  const [baby] = useBaby()
   const [feeding] = useLocalStorage('feeding', [])
-  const [sleep] = useLocalStorage('sleep', [])
   const [diaper] = useLocalStorage('diaper', [])
+  const [supplement] = useLocalStorage('supplement', [])
 
   const today = new Date().toISOString().split('T')[0]
 
-  const todayFeeding = feeding.filter(r => r.startTime.startsWith(today))
-  const todaySleep = sleep.filter(r => r.startTime.startsWith(today))
-  const todayDiaper = diaper.filter(r => r.time.startsWith(today))
+  const todayFeeding = feeding.filter(r => r.startTime && r.startTime.startsWith(today))
+  const todayDiaper = diaper.filter(r => r.time && r.time.startsWith(today))
+  const todaySupplement = supplement.filter(r => r.date && r.date.startsWith(today))
 
   const stats = [
     { label: '喂养', value: todayFeeding.length, color: 'from-pink-400 to-pink-500', icon: '🍼' },
-    { label: '睡眠', value: todaySleep.length, color: 'from-purple-400 to-purple-500', icon: '😴' },
     { label: '尿布', value: todayDiaper.length, color: 'from-amber-400 to-amber-500', icon: '👶' },
+    { label: '营养', value: todaySupplement.length, color: 'from-teal-400 to-teal-500', icon: '💊' },
   ]
 
   const quickActions = [
     { path: '/feeding', label: '记录喂养', icon: '🍼', color: 'from-pink-500 to-rose-500' },
-    { path: '/sleep', label: '记录睡眠', icon: '😴', color: 'from-purple-500 to-indigo-500' },
     { path: '/diaper', label: '记录尿布', icon: '👶', color: 'from-amber-500 to-orange-500' },
+    { path: '/supplement', label: '营养补充', icon: '💊', color: 'from-teal-500 to-cyan-500' },
   ]
 
   return (
@@ -63,7 +64,7 @@ export default function Home({ baby }) {
         ))}
       </div>
 
-      {todayFeeding.length === 0 && todaySleep.length === 0 && todayDiaper.length === 0 && (
+      {todayFeeding.length === 0 && todayDiaper.length === 0 && todaySupplement.length === 0 && (
         <div className="empty-state">
           <div className="empty-state-icon">📝</div>
           <p>还没有记录，快来记录宝宝的一天吧！</p>

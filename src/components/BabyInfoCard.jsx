@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default function BabyInfoCard({ baby }) {
   const age = calculateAge(baby.birthDate)
@@ -7,7 +8,10 @@ export default function BabyInfoCard({ baby }) {
     return (
       <div className="card p-6 text-center">
         <div className="text-4xl mb-3">👶</div>
-        <p className="text-gray-500">请先在设置中添加宝宝信息</p>
+        <p className="text-gray-500 mb-3">请先添加宝宝信息</p>
+        <Link to="/settings" className="btn-primary inline-block">
+          去添加
+        </Link>
       </div>
     )
   }
